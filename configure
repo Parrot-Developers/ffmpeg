@@ -3925,9 +3925,10 @@ done
 enable $ARCH_EXT_LIST
 
 die_unknown(){
-    echo "Unknown option \"$1\"."
-    echo "See $0 --help for available options."
-    exit 1
+#    echo "Unknown option \"$1\"."
+#    echo "See $0 --help for available options."
+#    exit 1
+    return 0
 }
 
 print_in_columns() {
