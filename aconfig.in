@@ -1,0 +1,14 @@
+config FFMPEG_MINIMAL_AVC_HEVC_DECODING
+        prompt "minimal ffmpeg build for H.264/AVC and H.265/HEVC decoding"
+        bool
+        default n
+
+config FFMPEG_ENABLE_CUVID
+        prompt "enable cuvid hardware acceleration (if enabled, the software must not be distributed!)"
+        bool
+        default n
+
+config FFMPEG_ENABLE_VDPAU
+        prompt "enable vdpau hardware acceleration"
+        bool
+        default n
