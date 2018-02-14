@@ -90,9 +90,21 @@ LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--disable-version3 \
 	--disable-nonfree
 
+# Export libraries
+LOCAL_EXPORT_LDLIBS = \
+	-lavcodec \
+	-lavutil \
+	-lavdevice \
+	-lavformat \
+	-lavfilter \
+	-lswresample \
+	-lswscale \
+	-lpostproc
+
 endif
 
 LOCAL_LIBRARIES := zlib
+
 
 include $(BUILD_AUTOTOOLS)
 
