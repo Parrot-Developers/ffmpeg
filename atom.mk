@@ -109,7 +109,6 @@ endif
 LOCAL_EXPORT_LDLIBS = \
 	-lavcodec \
 	-lavutil \
-	-lavdevice \
 	-lavformat \
 	-lavfilter \
 	-lswresample \
