@@ -31,7 +31,6 @@ LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 # Components options
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--disable-orc \
-	--disable-programs \
 	--disable-avconv \
 	--disable-avplay \
 	--disable-avprobe \
@@ -79,6 +78,14 @@ ifdef CONFIG_FFMPEG_MOV_FORMAT
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--enable-demuxer=mov \
 	--enable-muxer=mov
+endif
+
+ifdef CONFIG_FFMPEG_PROGRAMS
+LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
+	--enable-protocol=file
+else
+LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
+	--disable-programs
 endif
 
 ifdef CONFIG_FFMPEG_ENABLE_CUVID
