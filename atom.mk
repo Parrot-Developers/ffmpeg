@@ -91,7 +91,6 @@ LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--enable-nvenc \
 	--enable-cuda \
 	--enable-cuvid \
-	--enable-libnpp \
 	--enable-nonfree \
 	--extra-cflags=-I/usr/local/cuda/include \
 	--extra-ldflags=-L/usr/local/cuda/lib64
