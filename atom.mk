@@ -82,7 +82,11 @@ endif
 
 ifdef CONFIG_FFMPEG_PROGRAMS
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
-	--enable-protocol=file
+	--enable-protocol=file \
+	--enable-demuxer=h264 \
+	--enable-muxer=h264 \
+	--enable-parser=h264 \
+	--enable-muxer=mp4
 else
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--disable-programs
