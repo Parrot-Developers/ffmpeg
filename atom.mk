@@ -25,8 +25,17 @@ LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--enable-shared \
 	--enable-cross-compile \
 	--enable-optimizations \
-	--target-os="linux" \
 	--cross-prefix="$(TARGET_CROSS)"
+
+ifeq ("$(TARGET_OS)","windows")
+  ifeq ("$(TARGET_ARCH)","x86")
+    LOCAL_AUTOTOOLS_CONFIGURE_ARGS += --target-os="mingw32"
+  else ifeq ("$(TARGET_ARCH)","x64")
+    LOCAL_AUTOTOOLS_CONFIGURE_ARGS += --target-os="mingw64"
+  endif
+else
+  LOCAL_AUTOTOOLS_CONFIGURE_ARGS += --target-os="$(TARGET_OS)"
+endif
 
 # Components options
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
