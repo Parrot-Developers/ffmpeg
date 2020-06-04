@@ -49,7 +49,8 @@ LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--disable-filters \
 	--disable-network \
 	--disable-yasm \
-	--disable-bzlib
+	--disable-bzlib \
+	--disable-stripping
 
 # Lisencing options
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
