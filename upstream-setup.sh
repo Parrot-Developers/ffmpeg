@@ -10,3 +10,4 @@ echo "Setup upstream branches"
 git branch upstream-master upstream/master --track
 git branch upstream-2.8-branch upstream/release/2.8 --track
 git branch upstream-3.2-branch upstream/release/3.2 --track
+git branch upstream-3.3-branch upstream/release/3.3 --track
