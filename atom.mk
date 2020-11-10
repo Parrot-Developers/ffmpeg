@@ -47,7 +47,6 @@ LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--disable-avdevice \
 	--disable-avresample \
 	--disable-filters \
-	--disable-network \
 	--disable-yasm \
 	--disable-bzlib \
 	--disable-stripping
