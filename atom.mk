@@ -1,6 +1,9 @@
 
 LOCAL_PATH := $(call my-dir)
 
+# Optional prebuilt package: ffmpeg version of nvidia codec SDK headers
+$(call register-prebuilt-pkg-config-module,ffnvcodec,ffnvcodec)
+
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := ffmpeg-libav
@@ -100,6 +103,16 @@ ifdef CONFIG_FFMPEG_ENABLE_VDPAU
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--enable-vdpau \
 	--enable-decoder=h264_vdpau
+endif
+
+# Optional NVDEC HW decoding support: use the nvidia headers as prebuilt package
+LOCAL_CONDITIONAL_LIBRARIES := \
+	OPTIONAL:ffnvcodec
+ifneq ("$(call is-module-in-build-config,ffnvcodec)","")
+LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
+	--enable-nvdec \
+	--enable-hwaccel=h264_nvdec \
+	--enable-hwaccel=hevc_nvdec
 endif
 
 # License check (shall be the last rule)
