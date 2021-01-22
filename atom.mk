@@ -36,6 +36,15 @@ else
   LOCAL_AUTOTOOLS_CONFIGURE_ARGS += --target-os="$(TARGET_OS)"
 endif
 
+# on x86_*, nasm is expected
+ffmpeg_use_nasm := $(if $(filter $(TARGET_ARCH),x86 x64),1,0)
+
+ifeq ("$(ffmpeg_use_nasm)","1")
+  LOCAL_DEPENDS_HOST_MODULES := host.nasm
+else
+  LOCAL_AUTOTOOLS_CONFIGURE_ARGS += --disable-x86asm
+endif
+
 # Components options
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--disable-orc \
