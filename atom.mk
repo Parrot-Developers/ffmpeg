@@ -24,7 +24,9 @@ LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--enable-shared \
 	--enable-cross-compile \
 	--enable-optimizations \
-	--cross-prefix="$(TARGET_CROSS)"
+	--cross-prefix="$(TARGET_CROSS)" \
+	--cc=$(TARGET_CC) \
+	--cxx=$(TARGET_CXX)
 
 ifeq ("$(TARGET_OS)","windows")
   ifeq ("$(TARGET_ARCH)","x86")
