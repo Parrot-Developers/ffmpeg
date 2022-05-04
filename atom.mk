@@ -1,8 +1,10 @@
 
 LOCAL_PATH := $(call my-dir)
 
-# Optional prebuilt package: ffmpeg version of nvidia codec SDK headers
-$(call register-prebuilt-pkg-config-module,ffnvcodec,ffnvcodec)
+ifeq ("$(TARGET_OS_FLAVOUR)","native")
+  # Optional prebuilt package: ffmpeg version of nvidia codec SDK headers
+  $(call register-prebuilt-pkg-config-module,ffnvcodec,ffnvcodec)
+endif
 
 include $(CLEAR_VARS)
 
