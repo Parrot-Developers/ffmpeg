@@ -49,10 +49,9 @@ else
 endif
 
 # Optional NVCODEC HW encoding/decoding support: use the nvidia headers
-ffmpeg_use_nvcodec := $(call is-module-in-build-config,ffnvcodec)
-ifneq ("$(ffmpeg_use_nvcodec)","")
-LOCAL_DEPENDS_MODULES += \
-	ffnvcodec
+LOCAL_CONDITIONAL_LIBRARIES := \
+	CONFIG_FFMPEG_ENABLE_NVCODEC:ffnvcodec
+ifdef CONFIG_FFMPEG_ENABLE_NVCODEC
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--enable-nvdec \
 	--enable-nvenc
@@ -100,7 +99,7 @@ ifdef CONFIG_FFMPEG_HEVC_DECODING
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--enable-avcodec \
 	--enable-decoder=hevc
-ifneq ("$(ffmpeg_use_nvcodec)","")
+ifdef CONFIG_FFMPEG_ENABLE_NVCODEC
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--enable-hwaccel=hevc_nvdec
 endif
@@ -113,7 +112,7 @@ ifdef CONFIG_FFMPEG_AVC_DECODING
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--enable-avcodec \
 	--enable-decoder=h264
-ifneq ("$(ffmpeg_use_nvcodec)","")
+ifdef CONFIG_FFMPEG_ENABLE_NVCODEC
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--enable-hwaccel=h264_nvdec
 endif
@@ -125,7 +124,7 @@ endif
 ifdef CONFIG_FFMPEG_HEVC_ENCODING
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--enable-avcodec
-ifneq ("$(ffmpeg_use_nvcodec)","")
+ifdef CONFIG_FFMPEG_ENABLE_NVCODEC
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--enable-encoder=hevc_nvenc
 endif
@@ -137,7 +136,7 @@ endif
 ifdef CONFIG_FFMPEG_AVC_ENCODING
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--enable-avcodec
-ifneq ("$(ffmpeg_use_nvcodec)","")
+ifdef CONFIG_FFMPEG_ENABLE_NVCODEC
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--enable-encoder=h264_nvenc
 endif

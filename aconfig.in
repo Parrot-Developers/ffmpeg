@@ -1,8 +1,3 @@
-config FFMPEG_ENABLE_VDPAU
-        prompt "enable vdpau hardware acceleration"
-        bool
-        default n
-
 config FFMPEG_AVC_DECODING
         prompt "enable H264/AVC decoding"
         bool
@@ -35,5 +30,15 @@ config FFMPEG_MOV_FORMAT
 
 config FFMPEG_PROGRAMS
         prompt "enable ffmpeg programs: ffmpeg, ffprobe, ..."
+        bool
+        default n
+
+config FFMPEG_ENABLE_VDPAU
+        prompt "enable vdpau hardware acceleration"
+        bool
+        default n
+
+config FFMPEG_ENABLE_NVCODEC
+        prompt "enable NVCODEC hardware acceleration"
         bool
         default n
