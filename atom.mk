@@ -58,12 +58,14 @@ LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 endif
 
 # Optional OpenH264 encoding support
-ffmpeg_use_openh264 := $(call is-module-in-build-config,libopenh264)
-ifneq ("$(ffmpeg_use_openh264)","")
-LOCAL_DEPENDS_MODULES += \
-	libopenh264
+ffmpeg_has_openh264 := $(call is-module-in-build-config,libopenh264)
+ifneq ("$(ffmpeg_has_openh264)","")
+LOCAL_CONDITIONAL_LIBRARIES := \
+	CONFIG_FFMPEG_ENABLE_OPENH264:libopenh264
+ifdef CONFIG_FFMPEG_ENABLE_OPENH264
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--enable-libopenh264
+endif
 endif
 
 # Components options
@@ -140,9 +142,11 @@ ifdef CONFIG_FFMPEG_ENABLE_NVCODEC
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--enable-encoder=h264_nvenc
 endif
-ifneq ("$(ffmpeg_use_openh264)","")
+ifneq ("$(ffmpeg_has_openh264)","")
+ifdef CONFIG_FFMPEG_ENABLE_OPENH264
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--enable-encoder=libopenh264
+endif
 endif
 LOCAL_EXPORT_LDLIBS += \
 	-lavcodec \

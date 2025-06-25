@@ -42,3 +42,8 @@ config FFMPEG_ENABLE_NVCODEC
         prompt "enable NVCODEC hardware acceleration"
         bool
         default n
+
+config FFMPEG_ENABLE_OPENH264
+        prompt "enable OpenH264 encoding library"
+        bool
+        default n
