@@ -1172,7 +1172,7 @@ static av_cold int nvenc_setup_h264_config(AVCodecContext *avctx)
     if (ctx->intra_refresh) {
         h264->enableIntraRefresh = 1;
         h264->intraRefreshPeriod = avctx->gop_size;
-        h264->intraRefreshCnt = avctx->gop_size - 1;
+        h264->intraRefreshCnt = avctx->gop_size;
 #ifdef NVENC_HAVE_SINGLE_SLICE_INTRA_REFRESH
         h264->singleSliceIntraRefresh = ctx->single_slice_intra_refresh;
 #endif
