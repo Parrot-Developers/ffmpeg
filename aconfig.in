@@ -47,3 +47,8 @@ config FFMPEG_ENABLE_OPENH264
         prompt "enable OpenH264 encoding library"
         bool
         default n
+
+config FFMPEG_ENABLE_NVMPI
+        prompt "enable NVMPI hardware acceleration (Jetson target)"
+        bool
+        default n

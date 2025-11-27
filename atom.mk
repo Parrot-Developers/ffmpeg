@@ -64,7 +64,7 @@ endif
 LOCAL_CONDITIONAL_LIBRARIES := \
 	CONFIG_FFMPEG_ENABLE_NVCODEC:ffnvcodec
 ifdef CONFIG_FFMPEG_ENABLE_NVCODEC
-LOCAL_DEPENDS_MODULES := ffnvcodec
+LOCAL_DEPENDS_MODULES += ffnvcodec
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--enable-nvdec \
 	--enable-nvenc
@@ -109,6 +109,24 @@ LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--disable-all \
 	--disable-everything
+
+ifdef CONFIG_FFMPEG_ENABLE_NVMPI
+LOCAL_COPY_TO_BUILD_DIR := 1
+LOCAL_DEPENDS_MODULES += jetson-ffmpeg
+define LOCAL_CMD_BOOTSTRAP
+	(cd $(PRIVATE_SRC_DIR)/../jetson-ffmpeg && bash ./ffpatch.sh $(PRIVATE_SRC_DIR))
+endef
+LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
+	--enable-nvmpi
+ifdef CONFIG_FFMPEG_HEVC_DECODING
+LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
+	--enable-decoder=hevc_nvmpi
+endif
+ifdef CONFIG_FFMPEG_AVC_DECODING
+LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
+	--enable-decoder=h264_nvmpi
+endif
+endif
 
 ifdef CONFIG_FFMPEG_HEVC_DECODING
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
@@ -225,6 +243,9 @@ $(warning some options: "$(filter --enable-nonfree --enable-version3 \
 endif
 
 LOCAL_LIBRARIES := zlib
+ifdef CONFIG_FFMPEG_ENABLE_NVMPI
+LOCAL_LIBRARIES += jetson-ffmpeg
+endif
 
 define LOCAL_AUTOTOOLS_CMD_POST_INSTALL
 	@rm -rf $(TARGET_OUT_STAGING)/usr/share/ffmpeg
