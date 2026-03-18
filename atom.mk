@@ -104,11 +104,16 @@ LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 #
 # By default all decoders/encoders/parsers/muxers/demuxers are disabled to
 # reduce the compilation time.
+# Only avcodec is enabled.
 # When a user needs a specific component a new configuration should be added
 # to 'aconfig.in' and an entry should be added in this section
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--disable-all \
-	--disable-everything
+	--disable-everything \
+	--enable-avcodec
+LOCAL_EXPORT_LDLIBS += \
+	-lavcodec \
+	-lavutil
 
 ifdef CONFIG_FFMPEG_ENABLE_NVMPI
 LOCAL_COPY_TO_BUILD_DIR := 1
@@ -130,45 +135,30 @@ endif
 
 ifdef CONFIG_FFMPEG_HEVC_DECODING
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
-	--enable-avcodec \
 	--enable-decoder=hevc
 ifdef CONFIG_FFMPEG_ENABLE_NVCODEC
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--enable-hwaccel=hevc_nvdec
 endif
-LOCAL_EXPORT_LDLIBS += \
-	-lavcodec \
-	-lavutil
 endif
 
 ifdef CONFIG_FFMPEG_AVC_DECODING
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
-	--enable-avcodec \
 	--enable-decoder=h264
 ifdef CONFIG_FFMPEG_ENABLE_NVCODEC
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--enable-hwaccel=h264_nvdec
 endif
-LOCAL_EXPORT_LDLIBS += \
-	-lavcodec \
-	-lavutil
 endif
 
 ifdef CONFIG_FFMPEG_HEVC_ENCODING
-LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
-	--enable-avcodec
 ifdef CONFIG_FFMPEG_ENABLE_NVCODEC
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--enable-encoder=hevc_nvenc
 endif
-LOCAL_EXPORT_LDLIBS += \
-	-lavcodec \
-	-lavutil
 endif
 
 ifdef CONFIG_FFMPEG_AVC_ENCODING
-LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
-	--enable-avcodec
 ifdef CONFIG_FFMPEG_ENABLE_NVCODEC
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--enable-encoder=h264_nvenc
@@ -179,18 +169,11 @@ LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--enable-encoder=libopenh264
 endif
 endif
-LOCAL_EXPORT_LDLIBS += \
-	-lavcodec \
-	-lavutil
 endif
 
 ifdef CONFIG_FFMPEG_AAC_ENCODING
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
-	--enable-avcodec \
 	--enable-encoder=aac
-LOCAL_EXPORT_LDLIBS += \
-	-lavcodec \
-	-lavutil
 endif
 
 ifdef CONFIG_FFMPEG_MOV_FORMAT
@@ -202,7 +185,6 @@ endif
 
 ifdef CONFIG_FFMPEG_PROGRAMS
 LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
-	--enable-avcodec \
 	--enable-avfilter \
 	--enable-avformat \
 	--enable-swresample \
@@ -217,8 +199,6 @@ LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
 	--enable-demuxer=mov \
 	--enable-muxer=mp4
 LOCAL_EXPORT_LDLIBS += \
-	-lavcodec \
-	-lavutil \
 	-lavformat \
 	-lavfilter \
 	-lswresample \
