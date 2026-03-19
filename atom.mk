@@ -12,6 +12,10 @@ LOCAL_MODULE := ffmpeg-libav
 LOCAL_CATEGORY_PATH := multimedia/ffmpeg
 LOCAL_DESCRIPTION := Cross-platform tools and libraries to convert, manipulate and stream a wide range of multimedia formats and protocols
 
+# Disable Vulkan beta extensions to prevent build errors caused by missing
+# 'vulkan_beta.h' in the Android NDK/toolchain and to ensure binary stability.
+LOCAL_CFLAGS += -DVK_ENABLE_BETA_EXTENSIONS=0
+
 LOCAL_CONFIG_FILES := aconfig.in
 $(call load-config)
 
