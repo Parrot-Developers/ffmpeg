@@ -19,10 +19,18 @@ LOCAL_CFLAGS += -DVK_ENABLE_BETA_EXTENSIONS=0
 LOCAL_CONFIG_FILES := aconfig.in
 $(call load-config)
 
-ifeq ("$(TARGET_ARCH)","x64")
-  LOCAL_AUTOTOOLS_CONFIGURE_ARGS += --arch="x86_64"
+ifeq ("$(TARGET_OS)","darwin")
+  FFMPEG_ARCH := $(firstword $(subst -arch ,,$(APPLE_ARCH)))
+  # Extra flags for all Apple archs
+  EXTRA_FLAGS := $(foreach a,$(APPLE_ARCH),$(a))
+  LOCAL_AUTOTOOLS_CONFIGURE_ARGS += \
+    --arch=$(FFMPEG_ARCH) \
+    --extra-cflags="$(EXTRA_FLAGS)" \
+    --extra-ldflags="$(EXTRA_FLAGS)"
+else ifeq ("$(TARGET_ARCH)","x64")
+  LOCAL_AUTOTOOLS_CONFIGURE_ARGS += --arch=x86_64
 else
-  LOCAL_AUTOTOOLS_CONFIGURE_ARGS += --arch="$(TARGET_ARCH)"
+  LOCAL_AUTOTOOLS_CONFIGURE_ARGS += --arch=$(TARGET_ARCH)
 endif
 
 # Main compilation options
